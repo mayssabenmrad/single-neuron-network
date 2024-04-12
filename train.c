@@ -19,8 +19,16 @@
 #include <stdio.h>
 
 // Train the neuron using backpropagation
+// The function takes the following arguments:
+// 	* neuron: A pointer to the neuron to be trained.
+// 	* inputs: An array of input samples.
+// 	* outputs: An array of real outputs to the sample inputs.
+// 	* samples_num: The number of samples in the dataset.
+// 	* learning_rate: The learning rate used to update the weights of the
+// 	  neuron.
+// 	* epsilon: The minimum loss value at which the training process stops.
 int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
-	  int epochs, float learning_rate)
+	  float learning_rate, float epsilon)
 {
 	// Define the predictions array to store the output of the neuron
 	float predictions[samples_num];
