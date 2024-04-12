@@ -36,20 +36,28 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 	// Define the loss variable to hold the loss value of the neuron
 	float loss;
 
-	// Loop over the number of epochs
-	for (int i = 0; i < epochs; i++) {
+	// Define the epoch variable to keep track of the number of epochs
+	int epoch = 0;
+
+	// Keep adjusting the weights of the neuron using the gradients descent
+	// algorithm until the loss value converges to a minimum value.
+	do {
 		// Forward pass: Calculate the output of the neuron for each
 		// inputs sample
-		for (int j = 0; j < samples_num; j++) {
-			predictions[j] = run_neuron(neuron, inputs[j]);
+		for (int i = 0; i < samples_num; i++) {
+			predictions[i] = run_neuron(neuron, inputs[i]);
 		}
 
 		// Calculate the loss value of the neuron on the dataset
 		// using the Cross Entropy Loss function
 		loss = cross_entropy_loss(outputs, predictions, samples_num);
 
-		// Print the loss value
-		printf("Epoch %d: Loss = %f\n", i, loss);
+		// Print the loss value of the neuron at each epoch then update
+		// the epoch variable
+		printf("Epoch %d: Loss = %f\n", epoch, loss);
+		epoch++;
+
+		// -------------------------------------------------------------
 
 		// Backward pass: Calculate the derivatives of the loss function
 		// with respect to the weights of the neuron
@@ -60,13 +68,13 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 		// Calculate the average of the derivatives of the loss function
 		// with respect to the weights of the neuron over the dataset
 		// to update the weights.
-		for (int j = 0; j < samples_num; j++) {
+		for (int i = 0; i < samples_num; i++) {
 			// Calculate the derivative of the loss function with
 			// respect to the weights of the neuron.
-			dL_dw[0] = dL_dw[0] + dL_dWk(outputs[j], predictions[j],
-						     inputs[j][0]);
-			dL_dw[1] = dL_dw[1] + dL_dWk(outputs[j], predictions[j],
-						     inputs[j][1]);
+			dL_dw[0] += dL_dWk(outputs[i], predictions[i],
+					   inputs[i][0]);
+			dL_dw[1] += dL_dWk(outputs[i], predictions[i],
+					   inputs[i][1]);
 		}
 		dL_dw[0] = dL_dw[0] / samples_num;
 		dL_dw[1] = dL_dw[1] / samples_num;
@@ -74,11 +82,9 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 		// Update the weights of the neuron using the derivatives and
 		// the learning rate
 		// Wk = Wk + learning_rate * dL/dWk
-		neuron->weights[0] =
-			neuron->weights[0] - learning_rate * dL_dw[0];
-		neuron->weights[1] =
-			neuron->weights[1] - learning_rate * dL_dw[1];
-	}
+		neuron->weights[0] += learning_rate * dL_dw[0];
+		neuron->weights[1] += learning_rate * dL_dw[1];
+	} while (loss > epsilon);
 
 	return 0;
 }
