@@ -16,7 +16,6 @@
 #include "neuron.h"
 #include "loss_function.h"
 #include "derivatives.h"
-#include <stdlib.h>
 #include <stdio.h>
 
 // Train the neuron using backpropagation
@@ -24,7 +23,7 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 	  int epochs, float learning_rate)
 {
 	// Define the predictions array to store the output of the neuron
-	float *predictions = malloc(samples_num * sizeof(float));
+	float predictions[samples_num];
 
 	// Define the loss variable to hold the loss value of the neuron
 	float loss;
