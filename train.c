@@ -81,7 +81,7 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 
 		// Update the weights of the neuron using the derivatives and
 		// the learning rate
-		// Wk = Wk + learning_rate * dL/dWk
+		// Wk+1 = Wk + learning_rate * dL/dWk
 		neuron->weights[0] += learning_rate * dL_dw[0];
 		neuron->weights[1] += learning_rate * dL_dw[1];
 	} while (loss > epsilon);
