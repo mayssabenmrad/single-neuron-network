@@ -20,11 +20,11 @@
 #include <stdio.h>
 
 // Train the neuron using backpropagation
-int train(Neuron *neuron, float **inputs, float *outputs, int N, int epochs,
-	  float learning_rate)
+int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
+	  int epochs, float learning_rate)
 {
 	// Define the predictions array to store the output of the neuron
-	float *predictions = malloc(N * sizeof(float));
+	float *predictions = malloc(samples_num * sizeof(float));
 
 	// Define the loss variable to hold the loss value of the neuron
 	float loss;
@@ -33,13 +33,13 @@ int train(Neuron *neuron, float **inputs, float *outputs, int N, int epochs,
 	for (int i = 0; i < epochs; i++) {
 		// Forward pass: Calculate the output of the neuron for each
 		// inputs sample
-		for (int j = 0; j < N; j++) {
+		for (int j = 0; j < samples_num; j++) {
 			predictions[j] = run_neuron(neuron, inputs[j]);
 		}
 
 		// Calculate the loss value of the neuron on the dataset
 		// using the Cross Entropy Loss function
-		loss = cross_entropy_loss(outputs, predictions, N);
+		loss = cross_entropy_loss(outputs, predictions, samples_num);
 
 		// Print the loss value
 		printf("Epoch %d: Loss = %f\n", i, loss);
@@ -53,7 +53,7 @@ int train(Neuron *neuron, float **inputs, float *outputs, int N, int epochs,
 		// Calculate the average of the derivatives of the loss function
 		// with respect to the weights of the neuron over the dataset
 		// to update the weights.
-		for (int j = 0; j < N; j++) {
+		for (int j = 0; j < samples_num; j++) {
 			// Calculate the derivative of the loss function with
 			// respect to the weights of the neuron.
 			dL_dw[0] = dL_dw[0] + dL_dWk(outputs[j], predictions[j],
@@ -61,8 +61,8 @@ int train(Neuron *neuron, float **inputs, float *outputs, int N, int epochs,
 			dL_dw[1] = dL_dw[1] + dL_dWk(outputs[j], predictions[j],
 						     inputs[j][1]);
 		}
-		dL_dw[0] = dL_dw[0] / N;
-		dL_dw[1] = dL_dw[1] / N;
+		dL_dw[0] = dL_dw[0] / samples_num;
+		dL_dw[1] = dL_dw[1] / samples_num;
 
 		// Update the weights of the neuron using the derivatives and
 		// the learning rate
