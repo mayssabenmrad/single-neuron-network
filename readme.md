@@ -18,9 +18,9 @@
 
 # Todo list:
 
-    [x] Implement the neuron.
-    [x] Implement the training algorithm.
-    [] Test the implementation.
-    [x] Write the documentation.
-    [x] Write the readme file.
-    [] Submit the project.
+    - [x] Implement the neuron.
+    - [x] Implement the training algorithm.
+    - [] Test the implementation.
+    - [x] Write the documentation.
+    - [x] Write the readme file.
+    - [] Submit the project.
