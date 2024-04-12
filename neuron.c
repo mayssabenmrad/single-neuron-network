@@ -14,16 +14,6 @@ Neuron *new_neuron(float (*activation_function)(float x))
 		return NULL;
 	}
 
-	// Allocate memory for the weights of the neuron
-	neuron->weights = (float *)malloc(2 * sizeof(float));
-
-	// Check if the memory allocation was successful
-	if (neuron->weights == NULL) {
-		// Free the memory allocated for the neuron
-		free(neuron);
-		return NULL;
-	}
-
 	// Set the weights to random values between -1 and 1
 	srand(time(NULL));
 	for (int i = 0; i < 2; i++) {
@@ -59,9 +49,6 @@ float run_neuron(Neuron *neuron, float *input)
 // Frees the memory allocated for a neuron
 void free_neuron(Neuron *neuron)
 {
-	// Free the memory allocated for the weights of the neuron
-	free(neuron->weights);
-
 	// Free the memory allocated for the neuron
 	free(neuron);
 }

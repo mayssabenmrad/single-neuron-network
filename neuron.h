@@ -3,7 +3,7 @@
 
 // Define the structure of a neuron
 typedef struct {
-	float *weights;
+	float weights[2];
 	float bias;
 	float (*activation_function)(float x);
 } Neuron;
