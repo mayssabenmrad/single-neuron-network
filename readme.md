@@ -16,11 +16,11 @@
   _ The training algorithm is the gradient descent algorithm.
   _ The training algorithm is used to adjust the weights of the neuron to minimize the loss. \* The loss function is the binary cross-entropy loss function.
 
-# Todo list:
+### Todo list:
 
-    - [x] Implement the neuron.
-    - [x] Implement the training algorithm.
-    - [] Test the implementation.
-    - [x] Write the documentation.
-    - [x] Write the readme file.
-    - [] Submit the project.
+    - [X] Implement the neuron.
+    - [X] Implement the training algorithm.
+    - [ ] Test the implementation.
+    - [X] Write the documentation.
+    - [X] Write the readme file.
+    - [ ] Submit the project.
