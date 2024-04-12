@@ -26,6 +26,9 @@ int train(Neuron *neuron, float **inputs, float *outputs, int N, int epochs,
 	// Define the predictions array to store the output of the neuron
 	float *predictions = malloc(N * sizeof(float));
 
+	// Define the loss variable to hold the loss value of the neuron
+	float loss;
+
 	// Loop over the number of epochs
 	for (int i = 0; i < epochs; i++) {
 		// Forward pass: Calculate the output of the neuron for each
@@ -36,7 +39,7 @@ int train(Neuron *neuron, float **inputs, float *outputs, int N, int epochs,
 
 		// Calculate the loss value of the neuron on the dataset
 		// using the Cross Entropy Loss function
-		float loss = cross_entropy_loss(outputs, predictions, N);
+		loss = cross_entropy_loss(outputs, predictions, N);
 
 		// Print the loss value
 		printf("Epoch %d: Loss = %f\n", i, loss);
@@ -45,13 +48,7 @@ int train(Neuron *neuron, float **inputs, float *outputs, int N, int epochs,
 		// with respect to the weights of the neuron
 
 		// Define an array to store the derivatives of the loss function
-		float *dL_dw = (float *)malloc(2 * sizeof(float));
-
-		// Check if memory allocation was successful
-		if (dL_dw == NULL) {
-			printf("Error: Unable to allocate memory\n");
-			return -1;
-		}
+		float dL_dw[2];
 
 		// Calculate the average of the derivatives of the loss function
 		// with respect to the weights of the neuron over the dataset
