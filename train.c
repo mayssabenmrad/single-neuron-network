@@ -63,7 +63,7 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 		// with respect to the weights of the neuron
 
 		// Define an array to store the derivatives of the loss function
-		float dL_dw[2];
+		float dL_dw[2] = { 0, 0 };
 
 		// Calculate the average of the derivatives of the loss function
 		// with respect to the weights of the neuron over the dataset
