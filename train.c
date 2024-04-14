@@ -28,7 +28,7 @@
 // 	  neuron.
 // 	* epsilon: The minimum loss value at which the training process stops.
 int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
-	  float learning_rate, float epsilon)
+	  float learning_rate, int num_epoch)
 {
 	// Define the predictions array to store the output of the neuron
 	float predictions[samples_num];
@@ -36,12 +36,10 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 	// Define the loss variable to hold the loss value of the neuron
 	float loss;
 
-	// Define the epoch variable to keep track of the number of epochs
-	int epoch = 0;
 
 	// Keep adjusting the weights of the neuron using the gradients descent
-	// algorithm until the loss value converges to a minimum value.
-	do {
+	// loop until a  specified number of epochs(iterations).
+	for (int j = 1;j<= num_epoch;j++) {
 		// Forward pass: Calculate the output of the neuron for each
 		// inputs sample
 		for (int i = 0; i < samples_num; i++) {
@@ -54,8 +52,8 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 
 		// Print the loss value of the neuron at each epoch then update
 		// the epoch variable
-		printf("Epoch %d: Loss = %f\n", epoch, loss);
-		epoch++;
+		printf("Epoch %d: Loss = %f\n", j, loss);
+		
 
 		// -------------------------------------------------------------
 
@@ -84,7 +82,7 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 		// Wk+1 = Wk + learning_rate * dL/dWk
 		neuron->weights[0] += learning_rate * dL_dw[0];
 		neuron->weights[1] += learning_rate * dL_dw[1];
-	} while (loss > epsilon);
+	};
 
 	return 0;
 }
