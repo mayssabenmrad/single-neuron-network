@@ -1,9 +1,0 @@
-[
-    {
-        "label": "Compile and run current C file",
-        "command": "bash $ZED_WORKTREE_ROOT/run.sh $ZED_FILE",
-        "allow_concurrent_runs": true,
-        "use_new_terminal": false,
-        "reveal": "always"
-    }
-]
