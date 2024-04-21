@@ -1,5 +1,6 @@
 #include "neuron.h"
 #include "activation_functions.h"
+#include "train.h"
 #include <stdio.h>
 
 int main()
@@ -7,20 +8,37 @@ int main()
 	// Create a new neuron with the sigmoid activation function
 	Neuron *neuron = new_neuron(sigmoid);
 
-	// Print the weights of the neuron
-	for (int i = 0; i < 2; i++) {
-		printf("Weight %d: %f\n", i, neuron->weights[i]);
-	}
+	FILE* file = fopen("dataset.csv", "r");
+    if (file == NULL) {
+        fprintf(stderr, "Error: Cannot open file.\n");
+        return 1; // Return an error code
+    }
 
-	// Print the bias of the neuron
-	printf("Bias: %f\n", neuron->bias);
+    // Variables for the data to be read from the CSV
+    float x[100][2];
+    int y[100];
 
-	// Test the activation function of the neuron
-	printf("sigmoid(0) = %f\n", neuron->activation_function(0));
+    // Read the first line (header) to ignore it
+    char header[1024];
+    if (fgets(header, sizeof(header), file) == NULL) {
+        fprintf(stderr, "Error: Unable to read the file.\n");
+        fclose(file);
+        return 1;
+    }
 
-	// Test the run_neuron function
-	float input[2] = { 1, 2 };
-	printf("The output of the neuron is: %f\n", run_neuron(neuron, input));
+    int i = 0;
+    while (feof(file) != 1){
+        // Read the data line
+        fscanf(file, "%f,%f,%d", &x[i][0], &x[i][1], &y[i]);
+        i++;
+    }
+
+    // Close the file
+    fclose(file);
+
+	//train
+	train(neuron,&x[0][0],&y,i-1,0.1,100);
+	
 
 	// Free the memory allocated for the neuron
 	free_neuron(neuron);
