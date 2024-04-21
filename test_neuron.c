@@ -37,7 +37,7 @@ int main()
     fclose(file);
 
 	//train
-	train(neuron,&x[0][0],&y,i-1,0.1,100);
+	train(neuron,&x[0][0],&y,i-1,0.1,200);
 	
 
 	// Free the memory allocated for the neuron
