@@ -29,7 +29,9 @@
 // 	* epsilon: The minimum loss value at which the training process stops.
 int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 	  float learning_rate, int num_epoch)
-{
+{	
+	FILE* file_loss = fopen("loss_results.txt","w");
+	
 	// Define the predictions array to store the output of the neuron
 	float predictions[samples_num];
 
@@ -53,6 +55,8 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 		// Print the loss value of the neuron at each epoch then update
 		// the epoch variable
 		printf("Epoch %d: Loss = %f\n", j, loss);
+
+		fprintf(file_loss,"Epoch %d : Loss = %f\n",j,loss);
 		
 
 		// -------------------------------------------------------------
@@ -83,6 +87,8 @@ int train(Neuron *neuron, float **inputs, float *outputs, int samples_num,
 		neuron->weights[0] -= learning_rate * dL_dw[0];
 		neuron->weights[1] -= learning_rate * dL_dw[1];
 	};
+
+	fclose(file_loss);
 
 	return 0;
 }
